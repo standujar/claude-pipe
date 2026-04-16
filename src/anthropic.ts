@@ -46,7 +46,7 @@ function buildClaudeOptions(
 export async function handleAnthropicMessages(req: Request): Promise<Response> {
   let body: AnthropicRequest;
   try {
-    body = await req.json();
+    body = (await req.json()) as AnthropicRequest;
   } catch {
     return makeErrorResponse(400, "invalid_request_error", "Invalid JSON body");
   }

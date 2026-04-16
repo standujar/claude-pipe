@@ -1,5 +1,9 @@
 # claude-pipe
 
+[![npm version](https://img.shields.io/npm/v/claude-pipe)](https://www.npmjs.com/package/claude-pipe)
+[![CI](https://github.com/standujar/claude-pipe/actions/workflows/publish.yml/badge.svg)](https://github.com/standujar/claude-pipe/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 You pay $200/mo for Claude Max. Your tools (Cursor, Cline, Aider, LangChain, n8n...) all want an API key that costs extra. Why pay twice?
 
 **claude-pipe** exposes your Claude Max subscription as a standard Anthropic API on localhost. Any tool that speaks the Anthropic or OpenAI API format works out of the box — streaming, web search, extended thinking included. No tokens extracted, no OAuth hacks. Just `claude -p` under the hood.

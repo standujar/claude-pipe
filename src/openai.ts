@@ -25,7 +25,7 @@ function buildClaudeOptions(
 export async function handleOpenAICompletions(req: Request): Promise<Response> {
   let body: OpenAIRequest;
   try {
-    body = await req.json();
+    body = (await req.json()) as OpenAIRequest;
   } catch {
     return Response.json(
       {
