@@ -5,7 +5,7 @@ You pay $200/mo for Claude Max. Your tools (Cursor, Cline, Aider, LangChain, n8n
 **claude-pipe** exposes your Claude Max subscription as a standard Anthropic API on localhost. Any tool that speaks the Anthropic or OpenAI API format works out of the box — streaming, web search, extended thinking included. No tokens extracted, no OAuth hacks. Just `claude -p` under the hood.
 
 ```bash
-bun run src/index.ts
+bunx claude-pipe
 ```
 
 ```
