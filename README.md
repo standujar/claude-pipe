@@ -13,7 +13,7 @@ bunx claude-pipe
 ```
 
 ```
-claude-pipe v0.1.0
+claude-pipe
 Listening on http://127.0.0.1:4523
 
 Anthropic API:  POST /v1/messages

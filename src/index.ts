@@ -46,7 +46,7 @@ const server = Bun.serve({
 });
 
 console.log(`
-  claude-pipe v0.1.0
+  claude-pipe
 
   Listening on http://${HOST}:${PORT}
 
