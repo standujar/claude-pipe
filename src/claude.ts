@@ -1,12 +1,29 @@
 import type { CliEvent } from "./types";
 
+export const MODELS = [
+  "claude-opus-4-6",
+  "claude-sonnet-4-6",
+  "claude-haiku-4-5",
+  "claude-sonnet-4-5",
+  "claude-opus-4-5",
+  "claude-opus-4-1",
+];
+
 const MODEL_ALIASES: Record<string, string> = {
-  "gpt-4": "claude-sonnet-4-6",
-  "gpt-4o": "claude-sonnet-4-6",
-  "gpt-4o-mini": "claude-haiku-4-5",
+  // Short aliases → latest
   sonnet: "claude-sonnet-4-6",
   opus: "claude-opus-4-6",
   haiku: "claude-haiku-4-5",
+  // Version aliases
+  "sonnet-4.6": "claude-sonnet-4-6",
+  "sonnet-4.5": "claude-sonnet-4-5",
+  "opus-4.6": "claude-opus-4-6",
+  "opus-4.5": "claude-opus-4-5",
+  "opus-4.1": "claude-opus-4-1",
+  // OpenAI compat
+  "gpt-4": "claude-sonnet-4-6",
+  "gpt-4o": "claude-sonnet-4-6",
+  "gpt-4o-mini": "claude-haiku-4-5",
 };
 
 export function resolveModel(model: string): string {

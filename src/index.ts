@@ -1,11 +1,9 @@
 import { handleAnthropicMessages } from "./anthropic";
 import { handleOpenAICompletions } from "./openai";
-import { resolveModel } from "./claude";
+import { MODELS } from "./claude";
 
 const PORT = Number(process.env.PORT ?? 4523);
 const HOST = process.env.HOST ?? "127.0.0.1";
-
-const MODELS = ["claude-opus-4-6", "claude-sonnet-4-6", "claude-haiku-4-5"];
 
 function handleModels(): Response {
   return Response.json({

@@ -216,17 +216,22 @@ Model Provider → Anthropic:
 | `GET /v1/models` | Both | List available models |
 | `GET /health` | — | Health check |
 
-## Model aliases
+## Models
 
-| You type | You get |
+All Claude models are supported. Use full names or short aliases:
+
+| Alias | Model |
 |---|---|
 | `sonnet` | `claude-sonnet-4-6` |
 | `opus` | `claude-opus-4-6` |
 | `haiku` | `claude-haiku-4-5` |
+| `sonnet-4.5` | `claude-sonnet-4-5` |
+| `opus-4.5` | `claude-opus-4-5` |
+| `opus-4.1` | `claude-opus-4-1` |
 | `gpt-4` / `gpt-4o` | `claude-sonnet-4-6` |
 | `gpt-4o-mini` | `claude-haiku-4-5` |
 
-Any other model name is passed through as-is.
+Any other model name (e.g. `claude-sonnet-4-5-20250929`) is passed through as-is to the CLI.
 
 ## What works
 
