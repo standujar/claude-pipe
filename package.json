@@ -1,6 +1,6 @@
 {
   "name": "claude-pipe",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Use your Claude Max subscription as a standard Anthropic/OpenAI API. Routes through claude -p.",
   "type": "module",
   "bin": {
