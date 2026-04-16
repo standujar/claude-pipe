@@ -1,41 +1,60 @@
-# claude-pipe
+<p align="center">
+  <h1 align="center">claude-pipe</h1>
+  <p align="center">
+    Use your Claude Max subscription as a standard API.<br/>
+    One command. Every tool. Zero extra cost.
+  </p>
+  <p align="center">
+    <a href="https://www.npmjs.com/package/claude-pipe"><img src="https://img.shields.io/npm/v/claude-pipe?color=cb3837&label=npm" alt="npm"></a>
+    <a href="https://github.com/standujar/claude-pipe/actions"><img src="https://github.com/standujar/claude-pipe/actions/workflows/publish.yml/badge.svg" alt="CI"></a>
+    <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-blue" alt="License"></a>
+  </p>
+</p>
 
-[![npm version](https://img.shields.io/npm/v/claude-pipe)](https://www.npmjs.com/package/claude-pipe)
-[![CI](https://github.com/standujar/claude-pipe/actions/workflows/publish.yml/badge.svg)](https://github.com/standujar/claude-pipe/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+---
 
-You pay $200/mo for Claude Max. Your tools (Cursor, Cline, Aider, LangChain, n8n...) all want an API key that costs extra. Why pay twice?
+You pay $200/mo for Claude Max. Your tools all want an API key that costs extra. **Why pay twice?**
 
-**claude-pipe** exposes your Claude Max subscription as a standard Anthropic API on localhost. Any tool that speaks the Anthropic or OpenAI API format works out of the box — streaming, web search, extended thinking included. No tokens extracted, no OAuth hacks. Just `claude -p` under the hood.
+**claude-pipe** exposes your subscription as a standard Anthropic/OpenAI API on localhost. Streaming, web search, extended thinking — all included. No tokens extracted, no OAuth hacks. Just `claude -p` under the hood.
 
-## Install
+## Getting started
+
+### Install
+
+<details open>
+<summary><strong>npm</strong> (recommended)</summary>
 
 ```bash
 npm install -g claude-pipe
-```
-
-Then run:
-
-```bash
 claude-pipe
 ```
+</details>
 
-Or run directly without installing:
+<details>
+<summary><strong>bun</strong></summary>
 
 ```bash
 bunx claude-pipe
 ```
+</details>
 
+<details>
+<summary><strong>from source</strong></summary>
+
+```bash
+git clone https://github.com/standujar/claude-pipe.git
+cd claude-pipe
+bun run start
 ```
-claude-pipe
-Listening on http://127.0.0.1:4523
+</details>
 
-Anthropic API:  POST /v1/messages
-OpenAI API:     POST /v1/chat/completions
-Models:         GET  /v1/models
-```
+### Prerequisites
 
-## Quick test
+- [Claude Code](https://code.claude.com) installed and authenticated (`claude auth login`)
+- [Bun](https://bun.sh) runtime
+- Claude Pro or Max subscription
+
+### Verify it works
 
 ```bash
 curl http://localhost:4523/v1/messages \
@@ -45,27 +64,38 @@ curl http://localhost:4523/v1/messages \
   -d '{"model":"claude-sonnet-4-6","max_tokens":100,"messages":[{"role":"user","content":"Hello!"}]}'
 ```
 
-## Tool configuration
+## Use with your tools
 
-### Cursor
+> **API key**: always set to `anything` (the proxy ignores it — auth is handled by Claude Code)
 
-Cursor uses OpenAI format. Go to **Settings → Models → OpenAI API Key**:
+<details open>
+<summary><strong>Cursor</strong></summary>
 
-- **API Key**: `anything` (ignored by the proxy)
-- **Override OpenAI Base URL**: `http://127.0.0.1:4523/v1`
-- Select `claude-sonnet-4-6` or `claude-opus-4-6` as the model
+Settings → Models → OpenAI API Key:
 
-### Cline (VS Code)
+| Setting | Value |
+|---|---|
+| API Key | `anything` |
+| Override OpenAI Base URL | `http://127.0.0.1:4523/v1` |
+| Model | `claude-sonnet-4-6` |
+</details>
 
-Open Cline settings → **Provider: OpenAI Compatible**:
+<details>
+<summary><strong>Cline</strong> (VS Code)</summary>
 
-- **Base URL**: `http://127.0.0.1:4523/v1`
-- **API Key**: `anything`
-- **Model ID**: `claude-sonnet-4-6`
+Cline settings → Provider: **OpenAI Compatible**:
 
-### Continue.dev (VS Code)
+| Setting | Value |
+|---|---|
+| Base URL | `http://127.0.0.1:4523/v1` |
+| API Key | `anything` |
+| Model ID | `claude-sonnet-4-6` |
+</details>
 
-In `~/.continue/config.yaml`:
+<details>
+<summary><strong>Continue.dev</strong> (VS Code)</summary>
+
+`~/.continue/config.yaml`:
 
 ```yaml
 models:
@@ -75,16 +105,20 @@ models:
     apiBase: http://127.0.0.1:4523
     apiKey: anything
 ```
+</details>
 
-### Aider
+<details>
+<summary><strong>Aider</strong></summary>
 
 ```bash
 ANTHROPIC_API_KEY=anything \
 ANTHROPIC_BASE_URL=http://127.0.0.1:4523 \
 aider --model claude-sonnet-4-6
 ```
+</details>
 
-### Vercel AI SDK
+<details>
+<summary><strong>Vercel AI SDK</strong></summary>
 
 ```typescript
 import { createAnthropic } from "@ai-sdk/anthropic";
@@ -95,15 +129,15 @@ const anthropic = createAnthropic({
 });
 ```
 
-Or via environment variables:
+Or via env:
 
 ```bash
-ANTHROPIC_API_KEY=anything \
-ANTHROPIC_BASE_URL=http://127.0.0.1:4523 \
-bun run my-app.ts
+ANTHROPIC_API_KEY=anything ANTHROPIC_BASE_URL=http://127.0.0.1:4523 bun run app.ts
 ```
+</details>
 
-### LangChain
+<details>
+<summary><strong>LangChain</strong></summary>
 
 ```typescript
 import { ChatAnthropic } from "@langchain/anthropic";
@@ -114,8 +148,10 @@ const model = new ChatAnthropic({
   anthropicApiUrl: "http://127.0.0.1:4523",
 });
 ```
+</details>
 
-### LlamaIndex
+<details>
+<summary><strong>LlamaIndex</strong></summary>
 
 ```python
 from llama_index.llms.anthropic import Anthropic
@@ -126,23 +162,10 @@ llm = Anthropic(
     base_url="http://127.0.0.1:4523",
 )
 ```
+</details>
 
-### n8n
-
-Use the **HTTP Request** node with:
-
-- **URL**: `http://127.0.0.1:4523/v1/messages`
-- **Method**: POST
-- **Headers**: `content-type: application/json`, `x-api-key: anything`, `anthropic-version: 2023-06-01`
-
-### Dify
-
-In **Model Provider → Anthropic**:
-
-- **API Key**: `anything`
-- **API URL**: `http://127.0.0.1:4523`
-
-### OpenAI SDK (Python/TypeScript)
+<details>
+<summary><strong>OpenAI SDK</strong> (Python / TypeScript)</summary>
 
 Works with the OpenAI-compatible endpoint:
 
@@ -159,70 +182,96 @@ response = client.chat.completions.create(
     messages=[{"role": "user", "content": "Hello!"}],
 )
 ```
+</details>
+
+<details>
+<summary><strong>n8n</strong></summary>
+
+Use the **HTTP Request** node:
+
+| Setting | Value |
+|---|---|
+| URL | `http://127.0.0.1:4523/v1/messages` |
+| Method | POST |
+| Headers | `content-type: application/json`, `x-api-key: anything`, `anthropic-version: 2023-06-01` |
+</details>
+
+<details>
+<summary><strong>Dify</strong></summary>
+
+Model Provider → Anthropic:
+
+| Setting | Value |
+|---|---|
+| API Key | `anything` |
+| API URL | `http://127.0.0.1:4523` |
+</details>
+
+## Endpoints
+
+| Endpoint | Format | Description |
+|---|---|---|
+| `POST /v1/messages` | Anthropic | Messages API (streaming + non-streaming) |
+| `POST /v1/chat/completions` | OpenAI | Chat Completions (streaming + non-streaming) |
+| `GET /v1/models` | Both | List available models |
+| `GET /health` | — | Health check |
 
 ## Model aliases
 
-| Alias | Resolves to |
+| You type | You get |
 |---|---|
 | `sonnet` | `claude-sonnet-4-6` |
 | `opus` | `claude-opus-4-6` |
 | `haiku` | `claude-haiku-4-5` |
-| `gpt-4` | `claude-sonnet-4-6` |
-| `gpt-4o` | `claude-sonnet-4-6` |
+| `gpt-4` / `gpt-4o` | `claude-sonnet-4-6` |
 | `gpt-4o-mini` | `claude-haiku-4-5` |
 
-## Features
+Any other model name is passed through as-is.
 
-| Feature | Status |
+## What works
+
+| Feature | |
 |---|---|
+| Streaming (SSE) | Supported — real-time token streaming |
 | Non-streaming | Supported |
-| Streaming (SSE) | Supported |
 | System prompt | Supported |
-| Web search (`tools: [web_search]`) | Supported |
-| Extended thinking | Mapped to `--effort` |
-| Multi-turn conversations | Serialized to XML |
-| Token usage reporting | Supported |
+| Web search | Supported — pass `tools: [{ type: "web_search_20250305" }]` |
+| Extended thinking | Supported — mapped to `--effort` |
+| Multi-turn | Supported — serialized to prompt |
+| Token usage | Supported — reported in response |
 
-## Limitations
+## What doesn't (CLI limitations)
 
-These API parameters are accepted but ignored (no CLI equivalent):
+These API parameters are accepted but **silently ignored** — the CLI has no equivalent flags:
 
-- `max_tokens`
-- `temperature`
-- `top_p` / `top_k`
-- `stop_sequences`
-- Custom tool definitions (function calling)
-- Image/document input
-
-## Prerequisites
-
-- [Claude Code CLI](https://code.claude.com) installed and authenticated (`claude auth login`)
-- [Bun](https://bun.sh) runtime
-- Claude Pro or Max subscription
+`max_tokens` · `temperature` · `top_p` / `top_k` · `stop_sequences` · custom tools (function calling) · image/document input
 
 ## How it works
 
 ```
-Your tool (Cursor, LangChain, etc.)
-    ↓ POST /v1/messages or /v1/chat/completions
+Your tool (Cursor, Aider, LangChain, n8n...)
+    ↓
+  POST /v1/messages  or  /v1/chat/completions
     ↓
   claude-pipe (localhost:4523)
-    ↓ spawn: claude -p --model X --output-format stream-json
-    ↓ translate NDJSON events → SSE
     ↓
-  Claude Code CLI (your Max subscription)
+  claude -p --model X --output-format stream-json
+    ↓
+  Claude Code CLI → your Max subscription
 ```
+
+No OAuth tokens extracted. No authentication spoofed. The official CLI handles everything.
 
 ## Disclaimer
 
-This project uses `claude -p` (the official Claude Code CLI headless mode) to route API calls through your subscription.
-
-No OAuth tokens are extracted. No authentication is spoofed. The real CLI handles all authentication.
+`claude -p` is designed for CI/CD and dev automation. Using it as an API proxy is a grey area — Anthropic could restrict this in the future. Use at your own discretion.
 
 ## License
 
-MIT
+MIT — [LICENSE](LICENSE)
 
 ---
 
-If this saves you money, give it a star on [GitHub](https://github.com/standujar/claude-pipe).
+<p align="center">
+  If this saves you money, <a href="https://github.com/standujar/claude-pipe">give it a star</a>.
+</p>
