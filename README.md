@@ -267,10 +267,6 @@ Your tool (Cursor, Aider, LangChain, n8n...)
 
 No OAuth tokens extracted. No authentication spoofed. The official CLI handles everything.
 
-## Disclaimer
-
-`claude -p` is designed for CI/CD and dev automation. Using it as an API proxy is a grey area — Anthropic could restrict this in the future. Use at your own discretion.
-
 ## License
 
 MIT — [LICENSE](LICENSE)
